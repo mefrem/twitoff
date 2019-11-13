@@ -30,7 +30,24 @@ def create_app():
         users = User.query.all()
         return render_template('home.html', title='Home', users=users)
 
-    @app.route('/user/<username>')
+    # Adds users or gets user
+    @app.route('/user', methods=['POST']) # uses form
+    @app.route('/user/<name>', methods=['GET']) # needs name param
+    # methods is plural here, singular in template
+    def user(name=None, message=''):
+        try:
+            if request.method == 'POST':
+                add_or_update_user(name):
+                message = "User {} successfully added!".format(name)
+            tweets = User.query.filter(User.name==name).one().tweets
+        except Exception as e:
+            message = "Error adding {}: {}.".format(name,e)
+            tweets = []
+        return render_template('user.html', title=name, tweets=tweets,
+        message=message)
+
+
+    @app.route('/user/<username>', methods=['GET'])
     def show_user_profile(username):
         # Shows a user page with their tweets
         twitter_user = TWITTER.get_user(str(username))
