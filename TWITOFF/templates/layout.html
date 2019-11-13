@@ -6,20 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Picnicss.com CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/picnic">
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
-    {% if title %}
+    <!-- {% if title %}
     <title>TWITOFF - {{ title }}</title>
     {% else %}
     <title>TWITOFF APP</title>
-    {% endif %}
+    {% endif %} -->
 </head>
 <body>
   <main role="main" class="container">
-      {% block content %}{% endblock %}
+    <h1> Twitoff! </h1>
+      {% block content}
+      <form action="/user" method="post">
+        <input type="text" name="user_name" placeholder="User to add">
+        <input type="submit" value="Add User">
+      </form>
+      {% endblock}
   </main>
 </body>
 </html>
