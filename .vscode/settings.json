@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "/Users/maxefremov/.local/share/virtualenvs/twitoff-Vee1ZOA1/bin/python"
+    "python.pythonPath": "/Users/maxefremov/.local/share/virtualenvs/twitoff-Vee1ZOA1/bin/python",
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true
 }

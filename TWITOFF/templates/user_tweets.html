@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block content %}
+      <h1> @{{ username }}'s Latest Tweets</h1>
+            <ul>
+                    {% for tweet in tweets %}
+                    <li>{{ tweet.text }}</li>
+                    {% endfor %}
+{% endblock content %}

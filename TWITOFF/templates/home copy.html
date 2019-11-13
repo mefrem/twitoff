@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+      <meta charset="UTF-8">
+      <title>Twitoff!</title>
+    </head>
+    <body>
+      <h1> Elon Musk's tweets </h1>
+      <ul>
+      {% for tweet in elons_tweets %}
+      <li>
+        {{ tweet }}
+      </li>
+      {% endfor %}
+      </ul>
+    </body>
+</html>

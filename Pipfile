@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+flake8 = "*"
 
 [packages]
 jinja2 = "*"
@@ -16,6 +17,7 @@ gunicorn = "*"
 scikit-learn = "*"
 python-dotenv = "*"
 python-decouple = "*"
+twitter-scraper = "*"
 
 [requires]
 python_version = "3.7"
