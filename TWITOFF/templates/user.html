@@ -4,11 +4,9 @@
 <h2>User: {{ title }}</h2>
 
 <p>{{ message }}</p>
-
 <ul>
     {% for tweet in tweets %}
-    <li> {{ tweet.id }} - {{ tweet.text }}</li>
+    <li>{{ tweet.text }}</li>
     {% endfor %}
 </ul>
-
 {% endblock %}
