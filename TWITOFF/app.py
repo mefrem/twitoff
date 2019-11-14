@@ -1,15 +1,17 @@
 """Build my app factory and do routes and configuration"""
 from decouple import config
-from flask import Flask, escape, render_template, request, url_for
+from dotenv import load_dotenv
+from flask import Flask, render_template, request
 from .models import DB, User
+from .predict import predict_user
 from .twitter import add_or_update_user, BASILICA, TWITTER
 
+
+load_dotenv()
 
 
 def create_app():
     app = Flask(__name__)
-    if __name__ == '__main__':
-        app.run(debug=True)
 
     # Add our config
     app.config['SQLALCHEMY_DATABASE_URI'] = config('DATABASE_URL')
@@ -24,21 +26,35 @@ def create_app():
         users = User.query.all()
         return render_template('home.html', title='Home', users=users)
 
-    # Adds users or gets user
+    # Adding in a new route to add users or get users
     @app.route('/user', methods=['POST'])  # uses form
-    @app.route('/user/<name>', methods=['GET'])  # needs name param
-    # methods is plural here, singular in template
+    @app.route('/user/<name>', methods=['GET'])  # needs parameter
     def user(name=None, message=''):
+        name = name or request.values['user_name']
         try:
             if request.method == 'POST':
                 add_or_update_user(name)
                 message = "User {} successfully added!".format(name)
             tweets = User.query.filter(User.name == name).one().tweets
         except Exception as e:
-            message = "Error adding {}: {}.".format(name, e)
+            message = "Error adding {}: {}".format(name,e)
             tweets = []
         return render_template('user.html', title=name, tweets=tweets,
-            message=message)
+        message=message)
+    
+    # Adding predictions route
+    @app.route('/compare', methods=['POST'])
+    def compare(message=''):
+        user1, user2 = sorted([request.values['user1'],
+                               request.values['user2']])
+        if user1 == user2:
+            message = 'Must compare unique users'
+        else:
+            prediction = predict_user(user1, user2, request.values['tweet_text'])
+            message = '"{}" is more likely from {} than {}'.format(
+                request.values['tweet_text'], user1 if prediction else user2,
+                user2 if prediction else user1)
+        return render_template('prediction.html', title='Prediction', message=message)
 
     # @app.route('/user/<username>', methods=['GET'])
     # def show_user_profile(username):
@@ -55,4 +71,6 @@ def create_app():
         DB.create_all()
         return render_template('home.html', title='Reset', users=[])
 
+    if __name__ == '__main__':
+        app.run(debug=True)
     return app
