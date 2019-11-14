@@ -25,10 +25,12 @@
   <h1>List of Users and Tweets loaded in Database</h1>
       <ul>
         {% for user in users %} 
-          <h2>@{{ user.name }}</h2>
+          <li><h2>@{{ user.name }}</h2></li>
+          <ul>
           {% for tweet in user.tweets %}
-            <ul>{{ tweet }}</ul>
+            <li>{{ tweet }}</li>
           {% endfor %}
+          </ul>
         {% endfor %}
       </ul>
 {% endblock content %}
